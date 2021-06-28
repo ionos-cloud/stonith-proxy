@@ -1,0 +1,16 @@
+package com.oneandone.stonith.configuration;
+
+import org.slf4j.MDC;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
+
+public class LoggingInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
+        MDC.put("request-id", UUID.randomUUID().toString());
+        return true;
+    }
+}
