@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 
-import static com.oneandone.stonith.entities.Constants.DIALECT_NOT_NULL;
-
 @RestController
 @RequestMapping("/stonith/api/")
 @Validated
@@ -29,31 +27,28 @@ public class StonithController {
 
     @PostMapping("{serialNumber}/restart")
     public ResponseEntity<ResponseMessage> restartServer(@RequestHeader("Authorization") String authorization,
-                                                         @PathVariable String serialNumber,
-                                                         @RequestParam("dialect") @NotNull(message = DIALECT_NOT_NULL) String dialect)
+                                                         @PathVariable String serialNumber)
             throws UnauthorizedException, RequestException {
         this.securityService.checkAuthorizationToken(serialNumber, authorization);
-        this.operationService.restartServer(serialNumber, dialect);
+        this.operationService.restartServer(serialNumber);
         return ResponseEntity.ok(new ResponseMessage("Server " + serialNumber + " successfully restarted."));
     }
 
     @PostMapping("{serialNumber}/shutdown")
     public ResponseEntity<ResponseMessage> shutdownServer(@RequestHeader("Authorization") String authorization,
-                                                @PathVariable String serialNumber,
-                                                 @RequestParam("dialect") @NotNull(message = DIALECT_NOT_NULL) String dialect)
+                                                @PathVariable String serialNumber)
             throws UnauthorizedException, RequestException {
         this.securityService.checkAuthorizationToken(serialNumber, authorization);
-        this.operationService.shutdownServer(serialNumber, dialect);
+        this.operationService.shutdownServer(serialNumber);
         return ResponseEntity.ok(new ResponseMessage("Server " + serialNumber + " successfully shutdown."));
     }
 
     @PostMapping("{serialNumber}/poweron")
     public ResponseEntity<ResponseMessage> poweronServer(@RequestHeader("Authorization") String authorization,
-                                                @PathVariable String serialNumber,
-                                                @RequestParam("dialect") @NotNull(message = DIALECT_NOT_NULL) String dialect)
+                                                @PathVariable String serialNumber)
             throws UnauthorizedException, RequestException {
         this.securityService.checkAuthorizationToken(serialNumber, authorization);
-        this.operationService.poweronServer(serialNumber, dialect);
+        this.operationService.poweronServer(serialNumber);
         return ResponseEntity.ok(new ResponseMessage("Server " + serialNumber + " successfully powered on."));
     }
 }

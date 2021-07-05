@@ -7,7 +7,8 @@ CREATE TABLE `servers` (
     `login_user` varchar(100) DEFAULT NULL,
     `login_password` varchar(100) DEFAULT NULL,
     `api_token` varchar(100) DEFAULT NULL,
-`management_url` varchar(100) DEFAULT NULL,
+    `management_url` varchar(100) DEFAULT NULL,
+    'rmc_type' varchar(100) DEFAULT NULL,
 PRIMARY KEY (`id`),
 UNIQUE KEY `serial_number` (`serial_number`)
 );

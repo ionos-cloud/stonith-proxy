@@ -5,6 +5,7 @@ public class Server {
     private Integer stonithGroupId;
     private String serialNumber;
     private String managementUrl;
+    private String dialect;
     private String loginUser;
     private String loginPassword;
     private String apiToken;
@@ -31,6 +32,14 @@ public class Server {
 
     public void setManagementUrl(String managementUrl) {
         this.managementUrl = managementUrl;
+    }
+
+    public String getDialect() {
+        return dialect;
+    }
+
+    public void setDialect(String dialect) {
+        this.dialect = dialect;
     }
 
     public Integer getStonithGroupId() {

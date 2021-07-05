@@ -23,31 +23,31 @@ public class OperationService {
     @Autowired
     private RequestService requestService;
 
-    public void restartServer(String serialNumber, String dialect) throws RequestException, UnauthorizedException {
-        LOG.info("Restart procedure for server {} using dialect {} started.", serialNumber, dialect);
-        DialectConfiguration dialectConfiguration = this.fileReaderService.readFile(dialect, RESTART);
+    public void restartServer(String serialNumber) throws RequestException, UnauthorizedException {
         Server server = this.databaseService.getServer(serialNumber);
+        LOG.info("Restart procedure for server {} using dialect {} started.", serialNumber, server.getDialect());
+        DialectConfiguration dialectConfiguration = this.fileReaderService.readFile(server.getDialect(), RESTART);
         RequestConfiguration requestConfiguration = new RequestConfiguration(server, dialectConfiguration);
         this.requestService.executeRequest(requestConfiguration);
-        LOG.info("Restart procedure for server {} using dialect {} finished successfully.", serialNumber, dialect);
+        LOG.info("Restart procedure for server {} using dialect {} finished successfully.", serialNumber, server.getDialect());
     }
 
-    public void shutdownServer(String serialNumber, String dialect) throws RequestException, UnauthorizedException {
-        LOG.info("Shutdown procedure for server {} using dialect {} started.", serialNumber, dialect);
-        DialectConfiguration dialectConfiguration = this.fileReaderService.readFile(dialect, SHUTDOWN);
+    public void shutdownServer(String serialNumber) throws RequestException, UnauthorizedException {
         Server server = this.databaseService.getServer(serialNumber);
+        LOG.info("Shutdown procedure for server {} using dialect {} started.", serialNumber, server.getDialect());
+        DialectConfiguration dialectConfiguration = this.fileReaderService.readFile(server.getDialect(), SHUTDOWN);
         RequestConfiguration requestConfiguration = new RequestConfiguration(server, dialectConfiguration);
         this.requestService.executeRequest(requestConfiguration);
-        LOG.info("Shutdown procedure for server {} using dialect {} finished successfully.", serialNumber, dialect);
+        LOG.info("Shutdown procedure for server {} using dialect {} finished successfully.", serialNumber, server.getDialect());
 
     }
 
-    public void poweronServer(String serialNumber, String dialect) throws RequestException, UnauthorizedException {
-        LOG.info("Poweron procedure for server {} using dialect {} started.", serialNumber, dialect);
-        DialectConfiguration dialectConfiguration = this.fileReaderService.readFile(dialect, POWERON);
+    public void poweronServer(String serialNumber) throws RequestException, UnauthorizedException {
         Server server = this.databaseService.getServer(serialNumber);
+        LOG.info("Poweron procedure for server {} using dialect {} started.", serialNumber, server.getDialect());
+        DialectConfiguration dialectConfiguration = this.fileReaderService.readFile(server.getDialect(), POWERON);
         RequestConfiguration requestConfiguration = new RequestConfiguration(server, dialectConfiguration);
         this.requestService.executeRequest(requestConfiguration);
-        LOG.info("Poweron procedure for server {} using dialect {} finished successfully.", serialNumber, dialect);
+        LOG.info("Poweron procedure for server {} using dialect {} finished successfully.", serialNumber, server.getDialect());
     }
 }
