@@ -1,0 +1,16 @@
+[Unit]
+Description=stonith-proxy-app
+After=syslog.target
+
+[Service]
+User=root
+ExecStart=/var/stonith-proxy/stonith-proxy-app.jar
+SuccessExitStatus=143
+Environment=stonith__app__port=8080
+Environment=stonith__db__url=jdbc:mariadb://0.0.0.0:3306/stonith
+Environment=stonith__db__username=root
+Environment=stonith__db__password=root
+Environment=stonith__dialect__folder=/var/stonith-proxy/templates
+
+[Install]
+WantedBy=multi-user.target
