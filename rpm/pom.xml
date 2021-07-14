@@ -31,7 +31,7 @@
                     <group>${project.groupId}</group>
                     <mappings>
                         <mapping>
-                            <directory>/var/stonith-proxy/</directory>
+                            <directory>/opt/stonith-proxy/</directory>
                             <filemode>755</filemode>
                             <username>root</username>
                             <groupname>root</groupname>
@@ -43,7 +43,7 @@
                             </dependency>
                         </mapping>
                         <mapping>
-                            <directory>/var/stonith-proxy/templates</directory>
+                            <directory>/opt/stonith-proxy/templates</directory>
                             <filemode>755</filemode>
                             <username>root</username>
                             <groupname>root</groupname>
