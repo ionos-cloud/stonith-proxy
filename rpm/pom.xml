@@ -12,7 +12,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>stonith-proxy-rpm</name>
     <description>Stonith api rpm</description>
-    <packaging>rpm</packaging>
     <dependencies>
         <dependency>
             <groupId>com.oneandone</groupId>
@@ -20,53 +19,76 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
+    <url>https://github.com/1and1/stonith-proxy</url>
+    <organization>
+	    <name>1&amp;1 IONOS SE</name>
+	    <url>https://ionos.com</url>
+    </organization>
+    <properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	    <!-- For managing PGP Signing of RPM -->
+	    <rpm.skipSigning>true</rpm.skipSigning> <!-- Primary Artifact Configuration(s) -->
+    </properties>
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>rpm-maven-plugin</artifactId>
-                <version>2.2.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <group>${project.groupId}</group>
-                    <mappings>
-                        <mapping>
-                            <directory>/opt/stonith-proxy/</directory>
-                            <filemode>755</filemode>
-                            <username>root</username>
-                            <groupname>root</groupname>
-                            <dependency>
-                                <stripVersion>true</stripVersion>
-                                <includes>
-                                    <include>${project.groupId}:stonith-proxy-app</include>
-                                </includes>
-                            </dependency>
-                        </mapping>
-                        <mapping>
-                            <directory>/opt/stonith-proxy/templates</directory>
-                            <filemode>755</filemode>
-                            <username>root</username>
-                            <groupname>root</groupname>
-                            <sources>
-                                <source>
-                                    <location>../templates/</location>
-                                </source>
-                            </sources>
-                        </mapping>
-                        <mapping>
-                            <directory>/etc/systemd/system</directory>
-                            <filemode>755</filemode>
-                            <username>root</username>
-                            <groupname>root</groupname>
-                            <sources>
-                                <source>
-                                    <location>stonith-proxy.service</location>
-                                </source>
-                            </sources>
-                        </mapping>
-                    </mappings>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+                <groupId>de.dentrassi.maven</groupId>
+                <artifactId>rpm</artifactId>
+                <version>1.5.0</version>
+		<executions>
+			<execution>
+				<goals>
+					<goal>rpm</goal>
+				</goals>
+				<configuration>
+					<skipSigning>true</skipSigning>
+					<attach>false</attach>
+					<license>MIT</license>
+					<distribution>No</distribution>
+					<group>${project.groupId}</group>
+					<packager>thomas.mieslinger@ionos.com</packager> <!-- FIXME -->
+					<prefix>/opt/stonith-proxy/</prefix>
+					<!--TODO: <changelogFile>src/changelog</changelogFile>-->
+					<requires>
+						<require>java-headless &gt; 1.8</require>
+					</requires>
+					<entries>
+						<entry>
+							<name>/usr/lib/systemd/system/stonith-proxy.service</name>
+							<file>stonith-proxy.service</file>
+							<user>root</user>
+							<group>root</group>
+							<mode>0444</mode>
+						</entry>
+						<entry>
+							<name>/etc/sysconfig/stonith-proxy</name>
+							<file>stonith-proxy.sysconfig</file>
+							<user>root</user>
+							<group>root</group>
+							<mode>0400</mode>
+						</entry>
+						<entry>
+							<name>/opt/stonith-proxy/templates</name>
+							<collect>
+								<from>../templates/</from>
+							</collect>
+							<user>root</user>
+                                                        <group>root</group>
+                                                        <mode>0400</mode>
+						</entry>
+						<entry>
+							<name>/opt/stonith-proxy</name>
+							<user>root</user>
+							<group>root</group>
+                                                        <mode>0444</mode>
+							<file>../app/target/stonith-proxy-app-0.0.1-SNAPSHOT.jar</file>
+						</entry>
+					</entries>
+				</configuration>
+			</execution>
+		</executions>
+	</plugin>
+</plugins>
+</build>
 </project>
