@@ -67,6 +67,7 @@
 							<user>root</user>
 							<group>root</group>
 							<mode>0400</mode>
+							<configuration>true</configuration>
 						</entry>
 						<entry>
 							<name>/opt/stonith-proxy/templates</name>
