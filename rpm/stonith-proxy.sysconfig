@@ -1,0 +1,14 @@
+# Default settings for nsrrsetd
+# 
+#
+# JAVAARGS go before `-jar ...`
+# popular examples:
+# JAVAARGS="-Dorg.slf4j.simpleLogger.defaultLogLevel=debug"
+# JAVAARGS="-XX:+UseShenandoahGC -Xmx2g -Xms32m -XX:+UnlockExperimentalVMOptions -XX:ShenandoahUncommitDelay=5000 -XX:ShenandoahGuaranteedGCInterval=50000"
+
+# Environment tells Daemon what to do
+stonith__app__port=80
+stonith__db__url=jdbc:mariadb://0.0.0.0:3306/stonith
+stonith__db__username=root
+stonith__db__password=root
+stonith__dialect__folder=/opt/stonith-proxy/templates
