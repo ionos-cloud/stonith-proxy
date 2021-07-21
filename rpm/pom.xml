@@ -9,14 +9,14 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>stonith-proxy-rpm</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${parent.version}</version>
     <name>stonith-proxy-rpm</name>
     <description>Stonith api rpm</description>
     <dependencies>
         <dependency>
             <groupId>com.oneandone</groupId>
             <artifactId>stonith-proxy-app</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${parent.version}</version>
         </dependency>
     </dependencies>
     <url>https://github.com/1and1/stonith-proxy</url>
@@ -51,7 +51,7 @@
 					<prefix>/opt/stonith-proxy/</prefix>
 					<!--TODO: <changelogFile>src/changelog</changelogFile>-->
 					<requires>
-						<require>java-headless &gt; 1.8</require>
+						<require>java-11-openjdk-headless</require>
 					</requires>
 					<entries>
 						<entry>
@@ -70,6 +70,13 @@
 							<configuration>true</configuration>
 						</entry>
 						<entry>
+							<name>/opt/stonith-proxy/stonith-proxy.jar</name>
+							<file>../app/target/stonith-proxy-app-${parent.version}.jar</file>
+							<user>root</user>
+							<group>root</group>
+                                                        <mode>0444</mode>
+						</entry>
+						<entry>
 							<name>/opt/stonith-proxy/templates</name>
 							<collect>
 								<from>../templates/</from>
@@ -77,13 +84,6 @@
 							<user>root</user>
                                                         <group>root</group>
                                                         <mode>0400</mode>
-						</entry>
-						<entry>
-							<name>/opt/stonith-proxy</name>
-							<user>root</user>
-							<group>root</group>
-                                                        <mode>0444</mode>
-							<file>../app/target/stonith-proxy-app-0.0.1-SNAPSHOT.jar</file>
 						</entry>
 					</entries>
 				</configuration>
