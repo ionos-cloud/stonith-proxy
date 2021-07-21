@@ -5,18 +5,18 @@
     <parent>
         <groupId>com.oneandone</groupId>
         <artifactId>stonith-proxy</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
+	<version>${revision}</version>
     </parent>
     <artifactId>stonith-proxy-rpm</artifactId>
-    <version>${parent.version}</version>
+    <version>${project.parent.version}</version>
     <name>stonith-proxy-rpm</name>
     <description>Stonith api rpm</description>
     <dependencies>
         <dependency>
             <groupId>com.oneandone</groupId>
             <artifactId>stonith-proxy-app</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
     <url>https://github.com/1and1/stonith-proxy</url>
@@ -35,7 +35,7 @@
             <plugin>
                 <groupId>de.dentrassi.maven</groupId>
                 <artifactId>rpm</artifactId>
-                <version>1.5.0</version>
+                <version>1.6.0</version>
 		<executions>
 			<execution>
 				<goals>
@@ -46,7 +46,7 @@
 					<attach>false</attach>
 					<license>MIT</license>
 					<distribution>No</distribution>
-					<group>${project.groupId}</group>
+					<group>${project.parent.groupId}</group>
 					<packager>thomas.mieslinger@ionos.com</packager> <!-- FIXME -->
 					<prefix>/opt/stonith-proxy/</prefix>
 					<!--TODO: <changelogFile>src/changelog</changelogFile>-->
@@ -71,7 +71,7 @@
 						</entry>
 						<entry>
 							<name>/opt/stonith-proxy/stonith-proxy.jar</name>
-							<file>../app/target/stonith-proxy-app-${parent.version}.jar</file>
+							<file>../app/target/stonith-proxy-app-${project.parent.version}.jar</file>
 							<user>root</user>
 							<group>root</group>
                                                         <mode>0444</mode>
