@@ -11,6 +11,8 @@ public class LoggingInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
         MDC.put("request-id", UUID.randomUUID().toString());
+        MDC.put("request-ip", request.getRemoteAddr());
+        MDC.put("x-forwarded-for", request.getHeader("X-Forwarded-For"));
         return true;
     }
 }
