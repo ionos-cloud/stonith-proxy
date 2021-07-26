@@ -12,7 +12,7 @@ StartLimitBurst=5
 LimitNOFILE=40000
 EnvironmentFile=-/etc/sysconfig/stonith-proxy
 User=root
-ExecStart=/usr/bin/java $JAVAARGS -jar /opt/stonith-proxy/stonith-proxy.jar
+ExecStart=/opt/stonith-proxy/stonith-proxy.jar
 SuccessExitStatus=143
 
 [Install]
