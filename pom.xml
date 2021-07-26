@@ -13,7 +13,7 @@
     <version>${revision}</version>
     <name>stonith-proxy</name>
     <properties>
-	    <revision>1.0.2</revision> <!-- Global version number for all modules -->
+	    <revision>1.0.3</revision> <!-- Global version number for all modules -->
     </properties>
     <description>Stonith api</description>
     <packaging>pom</packaging>
