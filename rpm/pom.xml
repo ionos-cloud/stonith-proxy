@@ -74,7 +74,7 @@
 							<file>../app/target/stonith-proxy-app-${project.parent.version}.jar</file>
 							<user>root</user>
 							<group>root</group>
-                                                        <mode>0444</mode>
+                                                        <mode>0555</mode>
 						</entry>
 						<entry>
 							<name>/opt/stonith-proxy/templates</name>
