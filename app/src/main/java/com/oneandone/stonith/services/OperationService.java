@@ -23,6 +23,16 @@ public class OperationService {
     @Autowired
     private RequestService requestService;
 
+    public String statusServer(String serialNumber) throws RequestException, UnauthorizedException {
+        Server server = this.databaseService.getServer(serialNumber);
+        LOG.info("Status procedure for server {} using dialect {} started.", serialNumber, server.getDialect());
+        DialectConfiguration dialectConfiguration = this.fileReaderService.readFile(server.getDialect(), STATUS);
+        RequestConfiguration requestConfiguration = new RequestConfiguration(server, dialectConfiguration);
+        String status = this.requestService.executeRequest(requestConfiguration);
+        LOG.info("Status procedure for server {} using dialect {} finished successfully.", serialNumber, server.getDialect());
+        return status;
+    }
+
     public void restartServer(String serialNumber) throws RequestException, UnauthorizedException {
         Server server = this.databaseService.getServer(serialNumber);
         LOG.info("Restart procedure for server {} using dialect {} started.", serialNumber, server.getDialect());
