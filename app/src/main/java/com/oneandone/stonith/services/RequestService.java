@@ -8,6 +8,8 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +24,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class RequestService {
@@ -39,7 +42,14 @@ public class RequestService {
         if (response.getStatusCodeValue() < 200 || response.getStatusCodeValue() > 299) {
             throw new RequestException("Request failed with status code %d and body %s", response.getStatusCodeValue(), response.getBody());
         }
-        return response.getBody().get("PowerState").toString();
+        JSONObject res =  (JSONObject) response.getBody();
+        String powerState = null;
+        try {
+            powerState = res.get("PowerState").toString();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return powerState;
     }
 
     private RestTemplate getRestTemplate() throws RequestException {
