@@ -42,12 +42,14 @@ public class RequestService {
         if (response.getStatusCodeValue() < 200 || response.getStatusCodeValue() > 299) {
             throw new RequestException("Request failed with status code %d and body %s", response.getStatusCodeValue(), response.getBody());
         }
-        JSONObject res =  (JSONObject) response.getBody();
         String powerState = null;
         try {
-            powerState = res.get("PowerState").toString();
+            powerState = response.getBody().get("PowerState").toString();
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            JSONObject temp = new JSONObject();
+            temp.put("Searched_For_Key","PowerState");
+            temp.put("Message","Did not find the key in the returned json");
+            powerState = temp.toString();
         }
         return powerState;
     }
