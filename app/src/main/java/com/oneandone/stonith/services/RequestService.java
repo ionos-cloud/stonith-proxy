@@ -49,7 +49,7 @@ public class RequestService {
             JSONObject temp = new JSONObject();
             temp.put("Searched_For_Key","PowerState");
             temp.put("Message","Did not find the key in the returned json");
-            powerState = temp.toString();
+            throw new RuntimeException(temp.toString());
         }
         return powerState;
     }
