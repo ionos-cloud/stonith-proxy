@@ -1,5 +1,5 @@
 {
-  "endpoint" : "/redfish/v1/Managers/iDRAC.Embedded.1",
+  "endpoint" : "/redfish/v1/Chassis/System.Embedded.1",
   "method" : "GET",
   "headers" : {
     "Accept" : "*/*"
