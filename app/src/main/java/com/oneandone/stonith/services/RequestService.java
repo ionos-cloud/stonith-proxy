@@ -43,13 +43,9 @@ public class RequestService {
             throw new RequestException("Request failed with status code %d and body %s", response.getStatusCodeValue(), response.getBody());
         }
         String powerState = null;
-        try {
-            powerState = response.getBody().get("PowerState").toString();
-        } catch (JSONException e) {
-            JSONObject temp = new JSONObject();
-            temp.put("Searched_For_Key","PowerState");
-            temp.put("Message","Did not find the key in the returned json");
-            throw new RuntimeException(temp.toString());
+        powerState = response.getBody().get("PowerState").toString();
+        if(powerState == null){
+            powerState = "Did not find the key: PowerState, in the returned json";
         }
         return powerState;
     }
