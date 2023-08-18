@@ -25,6 +25,15 @@ public class StonithController {
     @Autowired
     private OperationService operationService;
 
+    @PostMapping("{serialNumber}/status")
+    public ResponseEntity<ResponseMessage> statusServer(@RequestHeader("Authorization") String authorization,
+                                                         @PathVariable String serialNumber)
+            throws UnauthorizedException, RequestException {
+        this.securityService.checkAuthorizationToken(serialNumber, authorization);
+        String status = this.operationService.statusServer(serialNumber);
+        return ResponseEntity.ok(new ResponseMessage(status));
+    }
+
     @PostMapping("{serialNumber}/restart")
     public ResponseEntity<ResponseMessage> restartServer(@RequestHeader("Authorization") String authorization,
                                                          @PathVariable String serialNumber)

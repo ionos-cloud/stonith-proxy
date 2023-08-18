@@ -8,6 +8,8 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,13 +24,14 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class RequestService {
     @Autowired
     private RestTemplateResponseErrorHandler errorHandler;
 
-    public void executeRequest(RequestConfiguration requestConfiguration) throws RequestException {
+    public String executeRequest(RequestConfiguration requestConfiguration) throws RequestException {
         RestTemplate restTemplate = this.getRestTemplate();
         HttpHeaders headers = this.getHeaders(requestConfiguration);
         String requestUrl = requestConfiguration.getServer().getManagementUrl() + requestConfiguration.getDialectConfiguration().getEndpoint();
@@ -39,6 +42,16 @@ public class RequestService {
         if (response.getStatusCodeValue() < 200 || response.getStatusCodeValue() > 299) {
             throw new RequestException("Request failed with status code %d and body %s", response.getStatusCodeValue(), response.getBody());
         }
+        String powerState = null;
+        try {
+            powerState = response.getBody().get("PowerState").toString();
+        } catch (JSONException e) {
+            JSONObject temp = new JSONObject();
+            temp.put("Searched_For_Key","PowerState");
+            temp.put("Message","Did not find the key in the returned json");
+            throw new RuntimeException(temp.toString());
+        }
+        return powerState;
     }
 
     private RestTemplate getRestTemplate() throws RequestException {

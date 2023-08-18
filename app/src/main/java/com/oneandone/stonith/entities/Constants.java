@@ -5,4 +5,5 @@ public class Constants {
     public final static String RESTART = "restart";
     public final static String SHUTDOWN = "shutdown";
     public final static String POWERON = "poweron";
+    public final static String STATUS = "status";
 }
