@@ -31,7 +31,20 @@ public class RequestService {
     @Autowired
     private RestTemplateResponseErrorHandler errorHandler;
 
-    public String executeRequest(RequestConfiguration requestConfiguration) throws RequestException {
+    public void executeRequest(RequestConfiguration requestConfiguration) throws RequestException {
+        RestTemplate restTemplate = this.getRestTemplate();
+        HttpHeaders headers = this.getHeaders(requestConfiguration);
+        String requestUrl = requestConfiguration.getServer().getManagementUrl() + requestConfiguration.getDialectConfiguration().getEndpoint();
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(requestConfiguration.getDialectConfiguration().getBody(), headers);
+        ResponseEntity<Map> response = restTemplate.exchange(requestUrl,
+                requestConfiguration.getDialectConfiguration().getMethod(), httpEntity, Map.class);
+        if (response.getStatusCodeValue() < 200 || response.getStatusCodeValue() > 299) {
+            throw new RequestException("Request failed with status code %d and body %s", response.getStatusCodeValue(), response.getBody());
+        }
+    }
+
+    public String executeRequestStatus(RequestConfiguration requestConfiguration) throws RequestException {
         RestTemplate restTemplate = this.getRestTemplate();
         HttpHeaders headers = this.getHeaders(requestConfiguration);
         String requestUrl = requestConfiguration.getServer().getManagementUrl() + requestConfiguration.getDialectConfiguration().getEndpoint();
