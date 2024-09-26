@@ -1,0 +1,11 @@
+{
+    "endpoint" : "/redfish/v1/Systems/Self/Actions/ComputerSystem.Reset",
+    "method" : "POST",
+    "headers" : {
+      "Content-Type" : "application/json",
+      "Accept" : "*/*"
+    },
+    "body" : {
+      "ResetType": "ForceOff"
+    }
+  }

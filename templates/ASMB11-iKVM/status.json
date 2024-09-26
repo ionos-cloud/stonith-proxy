@@ -1,0 +1,8 @@
+{
+    "endpoint" : "/redfish/v1/Systems/Self",
+    "method" : "GET",
+    "headers" : {
+        "Accept" : "*/*"
+    },
+    "body" : {}
+}
